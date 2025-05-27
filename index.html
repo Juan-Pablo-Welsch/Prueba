@@ -1,0 +1,30 @@
+<form id="loginForm">
+  <input type="email" id="email" placeholder="Correo">
+  <input type="password" id="password" placeholder="Contraseña">
+  <button type="submit">Ingresar</button>
+</form>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async function(e) {
+  e.preventDefault();
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  const response = await fetch("https://script.google.com/a/macros/grupochapelco.com.ar/s/AKfycbwHIvAyTBVRVGlT8vZGni0pIAKhc0Ms4HmPPqVkGUIXGyVD-NrWz_9mHgfkSzPYa9ZWRg/exec", {
+    method: "POST",
+    body: new URLSearchParams({
+      action: "login",
+      email,
+      password
+    })
+  });
+
+  const result = await response.json();
+  if (result.status === "ok") {
+    alert("Bienvenido " + result.nombre);
+    // Guardar nombre en sessionStorage y continuar a panel
+  } else {
+    alert("Credenciales incorrectas");
+  }
+});
+</script>
