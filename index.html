@@ -3,74 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chapelco Seguridad - Registro de Novedades</title>
+  <title>Chapelco Seguridad</title>
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #1c1c1c;
-      color: #fff;
+      background-color: #1b1b1b;
+      color: #ffffff;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #111;
-      padding: 1.5rem;
+      background-color: #FF8000;
+      padding: 20px;
       text-align: center;
-      border-bottom: 4px solid #FF8000;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2rem;
-      color: #FF8000;
-      letter-spacing: 2px;
+      font-size: 2.5em;
     }
 
-    .container {
-      max-width: 600px;
-      margin: 2rem auto;
-      padding: 2rem;
-      background-color: #2a2a2a;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 180, 216, 0.2);
+    main {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
     }
 
-    h2 {
-      color: #00b4d8;
+    .form-group {
+      margin-bottom: 15px;
     }
 
     label {
       display: block;
-      margin: 1rem 0 0.3rem;
+      margin-bottom: 5px;
+      font-weight: bold;
     }
 
-    input, select, textarea, button {
+    input, select, textarea {
       width: 100%;
-      padding: 0.6rem;
+      padding: 10px;
+      border-radius: 5px;
       border: none;
-      border-radius: 4px;
-      margin-bottom: 1rem;
-      font-size: 1rem;
+      box-sizing: border-box;
     }
 
     button {
       background-color: #FF8000;
       color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
 
-    button:hover {
-      background-color: #0096c7;
+    #formulario, #consulta, #resultadoConsulta {
+      background-color: #2b2b2b;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
     }
 
-    #panelPrincipal {
-      display: none;
-    }
-
-    .hidden {
+    .oculto {
       display: none;
     }
   </style>
@@ -78,109 +73,175 @@
 <body>
   <header>
     <h1>Chapelco Seguridad</h1>
+    <p id="subtitulo">Bienvenido</p>
   </header>
 
-  <div class="container" id="loginForm">
-    <h2>Ingreso de supervisor</h2>
-    <label for="email">Correo electrónico</label>
-    <input type="email" id="email" placeholder="ejemplo@correo.com" required>
-    
-    <label for="password">Contraseña</label>
-    <input type="password" id="password" placeholder="********" required>
+  <main>
+    <div id="loginForm">
+      <div class="form-group">
+        <label for="email">Correo</label>
+        <input type="email" id="email" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" required>
+      </div>
+      <button onclick="login()">Ingresar</button>
+    </div>
 
-    <button onclick="login()">Ingresar</button>
-  </div>
+    <div id="contenido" class="oculto">
+      <div id="formulario">
+        <h2>Registrar novedad</h2>
+        <div class="form-group">
+          <label for="legajo">Número de legajo del empleado</label>
+          <input type="number" id="legajo">
+        </div>
+        <div class="form-group">
+          <label for="nombreApellido">Apellido y Nombre del empleado</label>
+          <input type="text" id="nombreApellido">
+        </div>
+        <div class="form-group">
+          <label for="novedad">Tipo de novedad</label>
+          <select id="novedad">
+            <option value="">Seleccionar...</option>
+            <option>Ausente con aviso</option>
+            <option>Ausente sin aviso</option>
+            <option>Enfermedad</option>
+            <option>ART</option>
+            <option>Vacaciones</option>
+            <option>Suspensión</option>
+            <option>Llamado de atención verbal</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="detalle">Detalle / Comentarios</label>
+          <textarea id="detalle" rows="3"></textarea>
+        </div>
+        <button onclick="registrarNovedad()">Registrar novedad</button>
+      </div>
 
-  <div class="container" id="panelPrincipal">
-    <h2>Bienvenido <span id="nombreSupervisor"></span></h2>
+      <div id="consulta">
+        <h2>Consultar historial por legajo</h2>
+        <div class="form-group">
+          <label for="consultaLegajo">Número de legajo</label>
+          <input type="number" id="consultaLegajo">
+        </div>
+        <button onclick="consultarHistorial()">Consultar</button>
+      </div>
 
-    <label for="legajo">Número de legajo del empleado</label>
-    <input type="text" id="legajo" placeholder="Ej: 1001" required>
-
-    <label for="nombreEmpleado">Apellido y Nombre del empleado</label>
-    <input type="text" id="nombreEmpleado" placeholder="Ej: López Juan" required>
-
-    <label for="tipoNovedad">Tipo de novedad</label>
-    <select id="tipoNovedad" required>
-      <option value="">Seleccionar</option>
-      <option value="Ausente con aviso">Ausente con aviso</option>
-      <option value="Ausente sin aviso">Ausente sin aviso</option>
-      <option value="Enfermedad">Enfermedad</option>
-      <option value="ART">ART</option>
-      <option value="Vacaciones">Vacaciones</option>
-      <option value="Suspensión">Suspensión</option>
-      <option value="Llamado de atención verbal">Llamado de atención verbal</option>
-    </select>
-
-    <label for="detalle">Detalle / Comentarios</label>
-    <textarea id="detalle" rows="4" placeholder="Escriba aquí los detalles..."></textarea>
-
-    <button onclick="enviarNovedad()">Registrar novedad</button>
-  </div>
+      <div id="resultadoConsulta"></div>
+    </div>
+  </main>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwG2853TtUJgYmBEO1Q69aMGLLh6X-y_hlKo1AJuv22UDqQOwOUQXMYlbCthh_HjSiy/exec";
+    const scriptURL = 'https://script.google.com/a/macros/grupochapelco.com.ar/s/AKfycbwHIvAyTBVRVGlT8vZGni0pIAKhc0Ms4HmPPqVkGUIXGyVD-NrWz_9mHgfkSzPYa9ZWRg/exec';
+    let supervisorActual = '';
 
-    async function login() {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
+    function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
 
-      const response = await fetch(scriptURL, {
-        method: "POST",
+      fetch(scriptURL, {
+        method: 'POST',
         body: new URLSearchParams({
-          action: "login",
-          email: email,
-          password: password
+          action: 'login',
+          email,
+          password
         })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'ok') {
+          supervisorActual = data.nombre;
+          document.getElementById('subtitulo').textContent = `Bienvenido ${supervisorActual}`;
+          document.getElementById('loginForm').classList.add('oculto');
+          document.getElementById('contenido').classList.remove('oculto');
+        } else {
+          alert('Credenciales incorrectas');
+        }
       });
-
-      const result = await response.json();
-
-      if (result.status === "ok") {
-        document.getElementById("loginForm").style.display = "none";
-        document.getElementById("panelPrincipal").style.display = "block";
-        document.getElementById("nombreSupervisor").textContent = result.nombre;
-        sessionStorage.setItem("usuarioLogueado", email);
-      } else {
-        alert("Error: " + result.message);
-      }
     }
 
-    async function enviarNovedad() {
-      const legajo = document.getElementById("legajo").value.trim();
-      const nombre = document.getElementById("nombreEmpleado").value.trim();
-      const tipo = document.getElementById("tipoNovedad").value;
-      const detalle = document.getElementById("detalle").value.trim();
-      const supervisor = sessionStorage.getItem("usuarioLogueado");
+    function registrarNovedad() {
+      const legajo = document.getElementById('legajo').value;
+      const nombreApellido = document.getElementById('nombreApellido').value;
+      const novedad = document.getElementById('novedad').value;
+      const detalle = document.getElementById('detalle').value;
 
-      if (!legajo || !nombre || !tipo) {
-        alert("Por favor completá todos los campos obligatorios.");
+      if (!legajo || !nombreApellido || !novedad) {
+        alert('Por favor completá todos los campos obligatorios.');
         return;
       }
 
-      const response = await fetch(scriptURL, {
-        method: "POST",
+      fetch(scriptURL, {
+        method: 'POST',
         body: new URLSearchParams({
-          action: "cargarNovedad",
+          action: 'cargarNovedad',
           legajo,
-          nombre,
-          tipo,
+          nombreApellido,
+          novedad,
           detalle,
-          supervisor,
-          fecha: new Date().toISOString()
+          supervisor: supervisorActual
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 'ok') {
+          alert('Novedad registrada correctamente');
+          document.getElementById('legajo').value = '';
+          document.getElementById('nombreApellido').value = '';
+          document.getElementById('novedad').value = '';
+          document.getElementById('detalle').value = '';
+        } else {
+          alert('Error al registrar la novedad');
+        }
+      });
+    }
+
+    function consultarHistorial() {
+      const legajo = document.getElementById('consultaLegajo').value;
+
+      if (!legajo) {
+        alert('Por favor ingresá un número de legajo.');
+        return;
+      }
+
+      // 1. Registrar la consulta
+      fetch(scriptURL, {
+        method: 'POST',
+        body: new URLSearchParams({
+          action: 'registrarConsulta',
+          legajo,
+          supervisor: supervisorActual
         })
       });
 
-      const result = await response.json();
-      if (result.status === "ok") {
-        alert("✅ Novedad registrada correctamente.");
-        document.getElementById("legajo").value = "";
-        document.getElementById("nombreEmpleado").value = "";
-        document.getElementById("tipoNovedad").value = "";
-        document.getElementById("detalle").value = "";
-      } else {
-        alert("Error: " + result.message);
-      }
+      // 2. Consultar historial
+      fetch(scriptURL, {
+        method: 'POST',
+        body: new URLSearchParams({
+          action: 'consultarHistorial',
+          legajo
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        const contenedor = document.getElementById('resultadoConsulta');
+        if (data.status === 'ok' && data.historial.length > 0) {
+          let html = `<h4>Historial del legajo ${legajo}:</h4><ul>`;
+          data.historial.forEach(item => {
+            html += `<li><strong>${item.fecha}</strong> - ${item.tipo} - ${item.detalle} (Supervisor: ${item.supervisor})</li>`;
+          });
+          html += '</ul>';
+          contenedor.innerHTML = html;
+        } else {
+          contenedor.innerHTML = '<p>No se encontraron novedades para ese legajo.</p>';
+        }
+      })
+      .catch(error => {
+        console.error('Error al consultar historial:', error);
+        alert('Ocurrió un error al consultar el historial.');
+      });
     }
   </script>
 </body>
