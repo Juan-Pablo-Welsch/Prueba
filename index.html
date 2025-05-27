@@ -119,7 +119,7 @@
   </div>
 
   <script>
-    const scriptURL = "https://script.google.com/macros/s/TU_ID_DEL_SCRIPT/exec"; // <-- reemplazar por tu URL de Apps Script
+    const scriptURL = "https://script.google.com/a/macros/grupochapelco.com.ar/s/AKfycbwHIvAyTBVRVGlT8vZGni0pIAKhc0Ms4HmPPqVkGUIXGyVD-NrWz_9mHgfkSzPYa9ZWRg/exec";
 
     async function login() {
       const email = document.getElementById("email").value.trim();
@@ -161,7 +161,7 @@
       const response = await fetch(scriptURL, {
         method: "POST",
         body: new URLSearchParams({
-          action: "registrarNovedad",
+          action: "cargarNovedad",
           legajo,
           nombre,
           tipo,
